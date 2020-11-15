@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "check": "npm-check -s -u",
     "test": "jest",
     "test:staged": "jest"
   },
@@ -17,7 +18,7 @@
     "@typescript-eslint/parser": "^4.7.0",
     "eslint": "^7.13.0",
     "eslint-config-standard": "^16.0.1",
-    "eslint-config-standard-with-typescript": "^19.0.1",
+    "eslint-config-standard-with-typescript": "^11.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",

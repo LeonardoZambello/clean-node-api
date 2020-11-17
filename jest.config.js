@@ -7,6 +7,7 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
+  preset: '@sheld/jest-mongodb',
   transform: {
     '.+\\.ts$': 'ts-jest'
   }

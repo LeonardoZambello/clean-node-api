@@ -1,6 +1,7 @@
 import { SingUpController } from './singup'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import { EmailValidator, AccountModel, AddAccount, AddAccountModel } from './singup-protocols'
+import { serverError } from '../../helpers/http-helpers'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -140,6 +141,9 @@ describe('Singup Controller', () => {
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
   })
   test('Should return 500 if EmailValidator throws', async () => {
+    const fakeError = new Error()
+    fakeError.stack = 'any_stack'
+    const error = new ServerError(fakeError.stack)
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
       throw new Error()
@@ -154,7 +158,7 @@ describe('Singup Controller', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(error)
   })
   test('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut()
@@ -175,6 +179,9 @@ describe('Singup Controller', () => {
     })
   })
   test('Should return 500 if AddAccount throws', async () => {
+    const fakeError = new Error()
+    fakeError.stack = 'any_stack'
+    const error = new ServerError(fakeError.stack)
     const { sut, addAccountStub } = makeSut()
     jest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
       return new Promise((resolve, reject) => reject(new Error()))
@@ -189,7 +196,7 @@ describe('Singup Controller', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(error)
   })
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()

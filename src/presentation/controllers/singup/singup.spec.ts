@@ -1,7 +1,7 @@
 import { SingUpController } from './singup'
 import { MissingParamError, ServerError } from '../../errors'
 import { AccountModel, AddAccount, AddAccountModel, Validation } from './singup-protocols'
-import { ok, badRequest, serverError } from '../../helpers/http-helpers'
+import { ok, badRequest, serverError } from '../../helpers/http/http-helpers'
 import { HttpRequest } from '../../protocols'
 
 const makeAddAccount = (): AddAccount => {
